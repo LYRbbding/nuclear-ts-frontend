@@ -48,13 +48,13 @@
   >
     <el-table-column prop="id" label="学号" width="110" />
     <el-table-column prop="name" label="姓名" />
-    <el-table-column prop="school" label="在校" width="60">
+    <el-table-column prop="school" label="在校" width="50">
       <template #default="scope">
         <el-tag v-if="scope.row.school === '是'" type="info" effect="plain">是</el-tag>
         <el-tag v-else type="danger" effect="plain">否</el-tag>
       </template>
     </el-table-column>
-    <el-table-column prop="status" label="核酸" width="80">
+    <el-table-column prop="status" label="核酸" width="70">
       <template #default="scope">
         <el-tag v-if="scope.row.status === '已完成'" type="success" effect="plain">已完成</el-tag>
         <el-tag v-else type="warning" effect="plain">未完成</el-tag>
@@ -100,13 +100,13 @@
   >
     <el-table-column prop="id" label="学号" width="110" />
     <el-table-column prop="name" label="姓名" />
-    <el-table-column prop="school" label="在校" width="60">
+    <el-table-column prop="school" label="在校" width="50">
       <template #default="scope">
         <el-tag v-if="scope.row.school === '是'" type="info" effect="plain">是</el-tag>
         <el-tag v-else type="danger" effect="plain">否</el-tag>
       </template>
     </el-table-column>
-    <el-table-column prop="status" label="核酸" width="80">
+    <el-table-column prop="status" label="核酸" width="70">
       <template #default="scope">
         <el-tag v-if="scope.row.status === '已完成'" type="success" effect="plain">已完成</el-tag>
         <el-tag v-else type="warning" effect="plain">未完成</el-tag>
@@ -356,5 +356,14 @@ export default defineComponent({
 }
 .el-table .success-row {
   --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
+.el-tag {
+  padding: 0 3px !important;
+}
+.el-button--small {
+  padding: 5px 5px !important;
+}
+.el-table .cell {
+  padding: 0 3px !important;
 }
 </style>

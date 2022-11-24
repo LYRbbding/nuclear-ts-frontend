@@ -1,9 +1,9 @@
 const { defineConfig } = require('@vue/cli-service')
 
-console.log(`打包版本号为：${process.env.DEPLOY_VERSION}\n`);
+const DEPLOY_VERSION = '1.0.4-221124'
 
 module.exports = defineConfig({
-  publicPath: process.env.NODE_ENV === 'production' ? `https://cdn.jsdelivr.net/gh/LYRbbding/nuclear-ts-frontend@${process.env.DEPLOY_VERSION}/dist` : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? `https://cdn.jsdelivr.net/gh/LYRbbding/nuclear-ts-frontend@${DEPLOY_VERSION}/dist` : '/',
   pages: {
     index: {
       entry: 'src/main.ts',
