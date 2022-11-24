@@ -1,6 +1,6 @@
 <template>
   <h3>{{ date }}，今日核酸做了吗？</h3>
-  <el-input v-model="filter" placeholder="输入姓名或学号筛选" clearable @input="searchChange" />
+  <el-input v-model="search" placeholder="输入姓名或学号筛选" clearable />
   <el-scrollbar>
     <el-radio-group v-model="school" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
@@ -173,7 +173,6 @@ export default defineComponent({
 
     return {
       search: "",
-      filter: "",
       loading: true,
       showing: true,
       confirmDialogVisible: false,
@@ -187,7 +186,6 @@ export default defineComponent({
       status: '未完成',
       classes: '',
       date: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate(),
-      timer: 0,
     };
   },
   mounted() {
@@ -214,15 +212,6 @@ export default defineComponent({
       });
   },
   methods: {
-    searchChange(value: string) {
-      if (this.timer) {
-        clearTimeout(Number(this.timer));
-      }
-      this.timer = window.setTimeout(() => {
-        this.search = value;
-        this.timer = 0;
-      }, 500);
-    },
     filterSchool(value: string, row: Student) {
       return row.school === value;
     },
