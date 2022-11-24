@@ -46,7 +46,7 @@
     "
     style="width: 100%; height: calc(90vh - 96px)"
   >
-    <el-table-column prop="id" label="学号" width="110" />
+    <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
     <el-table-column prop="school" label="在校" width="50">
       <template #default="scope">
@@ -60,7 +60,7 @@
         <el-tag v-else type="warning" effect="plain">未完成</el-tag>
       </template>
     </el-table-column>
-    <el-table-column fixed="right" label="操作" width="70">
+    <el-table-column fixed="right" label="操作" width="65">
       <template #default="scope">
         <el-button
           v-if="scope.row.status == '未完成'"
@@ -98,7 +98,7 @@
     "
     style="width: 100%; height: calc(90vh - 96px)"
   >
-    <el-table-column prop="id" label="学号" width="110" />
+    <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
     <el-table-column prop="school" label="在校" width="50">
       <template #default="scope">
@@ -112,7 +112,7 @@
         <el-tag v-else type="warning" effect="plain">未完成</el-tag>
       </template>
     </el-table-column>
-    <el-table-column fixed="right" label="操作" width="70">
+    <el-table-column fixed="right" label="操作" width="65">
       <template #default="scope">
         <el-button
           v-if="scope.row.school == '否'"
