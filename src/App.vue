@@ -1,4 +1,5 @@
 <template>
+  <h3>{{ date }}，今日核酸做了吗？</h3>
   <el-input v-model="search" placeholder="输入姓名或学号筛选" clearable />
   <el-scrollbar>
     <el-radio-group v-model="school" style="display:flex;flex-wrap:nowrap!important">
@@ -44,7 +45,7 @@
           data.class === '20192111' + classes)
       )
     "
-    style="width: 100%; height: calc(90vh - 96px)"
+    style="width: 100%; height: calc(90vh - 128px)"
   >
     <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
@@ -96,7 +97,7 @@
           data.class === '20192111' + classes)
       )
     "
-    style="width: 100%; height: calc(90vh - 96px)"
+    style="width: 100%; height: calc(90vh - 128px)"
   >
     <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
@@ -177,6 +178,8 @@ export default defineComponent({
     let id = "";
     let name = "";
     let currentIndex = -1;
+    let time = new Date();
+    let date = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
 
     return {
       search: search,
@@ -192,6 +195,7 @@ export default defineComponent({
       school: '是',
       status: '未完成',
       classes: '',
+      date: date,
     };
   },
   mounted() {
