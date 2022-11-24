@@ -1,6 +1,6 @@
 <template>
   <h3>{{ date }}，今日核酸做了吗？</h3>
-  <el-input v-model="search" placeholder="输入姓名或学号筛选" clearable />
+  <el-input v-model="filter" placeholder="输入姓名或学号筛选" clearable @input="searchChange" />
   <el-scrollbar>
     <el-radio-group v-model="school" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
@@ -168,34 +168,26 @@ import { Student } from "./server/api";
 export default defineComponent({
   name: "App",
   data() {
-    let search = "";
-    let loading = true;
-    let showing = true;
-    let confirmDialogVisible = false;
     let tableData: Student[] = [];
-    let tips = "";
-    let setStatus = "";
-    let id = "";
-    let name = "";
-    let currentIndex = -1;
     let time = new Date();
-    let date = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
 
     return {
-      search: search,
-      loading: loading,
-      showing: showing,
-      confirmDialogVisible: confirmDialogVisible,
+      search: "",
+      filter: "",
+      loading: true,
+      showing: true,
+      confirmDialogVisible: false,
       tableData: tableData,
-      tips: tips,
-      setStatus: setStatus,
-      id: id,
-      name: name,
-      currentIndex: currentIndex,
+      tips: "",
+      setStatus: "",
+      id: "",
+      name: "",
+      currentIndex: -1,
       school: '是',
       status: '未完成',
       classes: '',
-      date: date,
+      date: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate(),
+      timer: 0,
     };
   },
   mounted() {
@@ -222,6 +214,15 @@ export default defineComponent({
       });
   },
   methods: {
+    searchChange(value: string) {
+      if (this.timer) {
+        clearTimeout(Number(this.timer));
+      }
+      this.timer = window.setTimeout(() => {
+        this.search = value;
+        this.timer = 0;
+      }, 500);
+    },
     filterSchool(value: string, row: Student) {
       return row.school === value;
     },
