@@ -4,15 +4,15 @@
   <el-scrollbar>
     <el-radio-group v-model="school" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
-        <el-radio label="是">在校</el-radio>
-        <el-radio label="否">不在校</el-radio>
+        <el-radio label="是">在校 {{ inSchool }}</el-radio>
+        <el-radio label="否">不在校 {{ outSchool }}</el-radio>
     </el-radio-group>
   </el-scrollbar>
   <el-scrollbar>
     <el-radio-group v-model="status" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
-        <el-radio label="未完成">未完成</el-radio>
-        <el-radio label="已完成">已完成</el-radio>
+        <el-radio label="未完成">未完成 {{ nuclearUnfinish }}</el-radio>
+        <el-radio label="已完成">已完成 {{ nuclearFinish }}</el-radio>
     </el-radio-group>
   </el-scrollbar>
   <el-scrollbar>
@@ -186,6 +186,10 @@ export default defineComponent({
       status: '未完成',
       classes: '',
       date: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate(),
+      inSchool: 0,
+      outSchool: 0,
+      nuclearFinish: 0,
+      nuclearUnfinish: 0,
     };
   },
   mounted() {
@@ -203,6 +207,10 @@ export default defineComponent({
     })
       .then((response) => {
         this.tableData.push(...response.res);
+        this.nuclearFinish = this.tableData.filter((data) => data.status === '已完成').length;
+        this.nuclearUnfinish = this.tableData.filter((data) => data.status === '未完成').length;
+        this.inSchool = this.tableData.filter((data) => data.school === '是').length;
+        this.outSchool = this.tableData.filter((data) => data.school === '否').length;
       })
       .catch(() => {
         ElMessage.error("网络异常，请稍后再试");
