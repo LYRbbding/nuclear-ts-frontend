@@ -207,8 +207,8 @@ export default defineComponent({
     })
       .then((response) => {
         this.tableData.push(...response.res);
-        this.nuclearFinish = this.tableData.filter((data) => data.status === '已完成').length;
-        this.nuclearUnfinish = this.tableData.filter((data) => data.status === '未完成').length;
+        this.nuclearFinish = this.tableData.filter((data) => data.status === '已完成' && data.school === '是').length;
+        this.nuclearUnfinish = this.tableData.filter((data) => data.status === '未完成' && data.school === '是').length;
         this.inSchool = this.tableData.filter((data) => data.school === '是').length;
         this.outSchool = this.tableData.filter((data) => data.school === '否').length;
       })

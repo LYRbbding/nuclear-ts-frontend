@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 
-const DEPLOY_VERSION = '1.0.9-221125'
+const DEPLOY_VERSION = '1.1.0-221126'
 
 module.exports = defineConfig({
   publicPath: process.env.NODE_ENV === 'production' ? `https://cdn.jsdelivr.net/gh/LYRbbding/nuclear-ts-frontend@${DEPLOY_VERSION}/dist` : '/',
