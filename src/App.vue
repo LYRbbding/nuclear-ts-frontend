@@ -16,6 +16,12 @@
     </el-radio-group>
   </el-scrollbar>
   <el-scrollbar>
+    <el-radio-group v-model="days" style="display:flex;flex-wrap:nowrap!important">
+        <el-radio label="">全部</el-radio>
+        <el-radio label="2">核酸两天 {{ nuclear2Days }}</el-radio>
+    </el-radio-group>
+  </el-scrollbar>
+  <el-scrollbar>
     <el-radio-group v-model="classes" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
         <el-radio label="21">21</el-radio>
@@ -31,6 +37,7 @@
   <el-table
     v-loading="loading"
     v-if="showing"
+    :row-class-name="tableStatusClassName"
     :data="
       tableData.filter(
         (data) =>
@@ -41,11 +48,13 @@
           data.school === school) && 
           (!status ||
           data.status === status) && 
+          (!days ||
+          data.days === days) && 
           (!classes ||
           data.class === '20192111' + classes)
       )
     "
-    style="width: 100%; height: calc(90vh - 128px)"
+    style="width: 100%; height: calc(90vh - 160px)"
   >
     <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
@@ -83,6 +92,7 @@
   <el-table
     v-loading="loading"
     v-else
+    :row-class-name="tableStatusClassName"
     :data="
       tableData.filter(
         (data) =>
@@ -97,7 +107,7 @@
           data.class === '20192111' + classes)
       )
     "
-    style="width: 100%; height: calc(90vh - 128px)"
+    style="width: 100%; height: calc(90vh - 160px)"
   >
     <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
@@ -184,12 +194,14 @@ export default defineComponent({
       currentIndex: -1,
       school: '是',
       status: '未完成',
+      days: '2',
       classes: '',
       date: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate(),
       inSchool: 0,
       outSchool: 0,
       nuclearFinish: 0,
       nuclearUnfinish: 0,
+      nuclear2Days: 0,
     };
   },
   mounted() {
@@ -211,6 +223,7 @@ export default defineComponent({
         this.nuclearUnfinish = this.tableData.filter((data) => data.status === '未完成' && data.school === '是').length;
         this.inSchool = this.tableData.filter((data) => data.school === '是').length;
         this.outSchool = this.tableData.filter((data) => data.school === '否').length;
+        this.nuclear2Days = this.tableData.filter((data) => data.status === '未完成' && data.school === '是' && data.days === '2').length;
       })
       .catch(() => {
         ElMessage.error("网络异常，请稍后再试");
@@ -220,6 +233,19 @@ export default defineComponent({
       });
   },
   methods: {
+    tableStatusClassName({
+      row,
+      rowIndex,
+    }: {
+      row: Student
+      rowIndex: number
+    }) {
+      if (row.days === '2') {
+        return 'warning-row';
+      } else {
+        return 'success-row';
+      }
+    },
     filterSchool(value: string, row: Student) {
       return row.school === value;
     },

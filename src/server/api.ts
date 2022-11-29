@@ -13,6 +13,7 @@ export interface Student {
   school: string;
   status: string;
   date: string;
+  days: string;
 }
 
 export interface nuclear_list {
