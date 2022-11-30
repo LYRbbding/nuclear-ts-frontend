@@ -22,6 +22,13 @@
     </el-radio-group>
   </el-scrollbar>
   <el-scrollbar>
+    <el-radio-group v-model="dormitory" style="display:flex;flex-wrap:nowrap!important">
+        <el-radio label="">全部</el-radio>
+        <el-radio label="学二">学二楼</el-radio>
+        <el-radio label="学十一">学十一楼</el-radio>
+    </el-radio-group>
+  </el-scrollbar>
+  <el-scrollbar>
     <el-radio-group v-model="classes" style="display:flex;flex-wrap:nowrap!important">
         <el-radio label="">全部</el-radio>
         <el-radio label="21">21</el-radio>
@@ -36,7 +43,6 @@
   </el-scrollbar>
   <el-table
     v-loading="loading"
-    v-if="showing"
     :row-class-name="tableStatusClassName"
     :data="
       tableData.filter(
@@ -50,11 +56,13 @@
           data.status === status) && 
           (!days ||
           data.days === days) && 
+          (!dormitory ||
+          data.dormitory === dormitory) && 
           (!classes ||
           data.class === '20192111' + classes)
       )
     "
-    style="width: 100%; height: calc(90vh - 160px)"
+    style="width: 100%; height: calc(90vh - 192px)"
   >
     <el-table-column prop="id" label="学号" width="100" />
     <el-table-column prop="name" label="姓名" />
@@ -70,7 +78,7 @@
         <el-tag v-else type="warning" effect="plain">未完成</el-tag>
       </template>
     </el-table-column>
-    <el-table-column fixed="right" label="操作" width="65">
+    <el-table-column v-if="showing" fixed="right" label="操作" width="65">
       <template #default="scope">
         <el-button
           v-if="scope.row.status == '未完成'"
@@ -88,42 +96,7 @@
         >
       </template>
     </el-table-column>
-  </el-table>
-  <el-table
-    v-loading="loading"
-    v-else
-    :row-class-name="tableStatusClassName"
-    :data="
-      tableData.filter(
-        (data) =>
-          (!search ||
-          data.name.indexOf(search) !== -1 ||
-          data.id.indexOf(search) !== -1) && 
-          (!school ||
-          data.school === school) && 
-          (!status ||
-          data.status === status) && 
-          (!classes ||
-          data.class === '20192111' + classes)
-      )
-    "
-    style="width: 100%; height: calc(90vh - 160px)"
-  >
-    <el-table-column prop="id" label="学号" width="100" />
-    <el-table-column prop="name" label="姓名" />
-    <el-table-column prop="school" label="在校" width="50">
-      <template #default="scope">
-        <el-tag v-if="scope.row.school === '是'" type="info" effect="plain">是</el-tag>
-        <el-tag v-else type="danger" effect="plain">否</el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column prop="status" label="核酸" width="70">
-      <template #default="scope">
-        <el-tag v-if="scope.row.status === '已完成'" type="success" effect="plain">已完成</el-tag>
-        <el-tag v-else type="warning" effect="plain">未完成</el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column fixed="right" label="操作" width="65">
+    <el-table-column v-else fixed="right" label="操作" width="65">
       <template #default="scope">
         <el-button
           v-if="scope.row.school == '否'"
@@ -202,6 +175,7 @@ export default defineComponent({
       nuclearFinish: 0,
       nuclearUnfinish: 0,
       nuclear2Days: 0,
+      dormitory: "",
     };
   },
   mounted() {
@@ -211,7 +185,7 @@ export default defineComponent({
       let manage = params.get("manage");
       if (manage) {
         this.showing = false;
-        console.log(manage)
+        this.status = '';
       }
     }
     axios({

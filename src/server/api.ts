@@ -14,6 +14,7 @@ export interface Student {
   status: string;
   date: string;
   days: string;
+  dormitory: string;
 }
 
 export interface nuclear_list {
