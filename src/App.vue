@@ -194,7 +194,7 @@ export default defineComponent({
       currentIndex: -1,
       school: '是',
       status: '未完成',
-      days: '2',
+      days: '',
       classes: '',
       date: time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate(),
       inSchool: 0,
